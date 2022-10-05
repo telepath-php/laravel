@@ -1,6 +1,6 @@
 {
     "name": "telepath/laravel",
-    "description": "Laravel integration for Telepath",
+    "description": "Laravel integration of Telepath",
     "type": "library",
     "require": {
         "php": "^8.0",
