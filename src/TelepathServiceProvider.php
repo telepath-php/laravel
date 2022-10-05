@@ -3,7 +3,6 @@
 namespace Telepath\Laravel;
 
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Telepath\Laravel\Http\Middleware\TrustTelegramNetwork;
