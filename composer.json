@@ -1,0 +1,30 @@
+{
+    "name": "telepath/laravel",
+    "description": "Laravel integration for Telepath",
+    "type": "library",
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^9.0",
+        "telepath/telepath": "^0.5",
+        "symfony/cache": "^6.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Telepath\\Laravel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tii",
+            "email": "mail@tii.one"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Telepath\\Laravel\\TelepathServiceProvider"
+            ]
+        }
+    }
+}
