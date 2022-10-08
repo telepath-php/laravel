@@ -27,13 +27,10 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-    </li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#known-limitations">Known Limitations</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -45,7 +42,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+Telepath is a modern framework-agnostic libraray to create Telegram Bots in PHP.
 
+This package integrates a Telepath based bot into your Laravel application being able to receive and respond to Telegram messages your bot receives.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -54,9 +53,44 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
+This package can be installed via composer:
+
+`composer require telepath/laravel`
+
+The package will automatically install the required dependencies to use Telepath in your Laravel application.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+
+You can get the Bot instance via the service container
+
+```php
+$bot = resolve(\Telepath\TelegramBot::class);
+```
+
+or by using autowiring to request an instance.
+
+```php
+public function __construct(
+    protected TelegramBot $bot
+) {}
+```
+
+_For a more detailled look including how to integrate Telepath into your Laravel application please also have a look into our [Documentation][docs]_
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- KNOWN LIMITATIONS -->
+## Known Limitations
+
+Please note that handling multple bots in the same Laravel application is not supported yet.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- CONTRIBUTING -->
@@ -108,3 +142,5 @@ Project Link: [https://github.com/telepath-php/laravel](https://github.com/telep
 [issues-url]: https://github.com/telepath-php/laravel/issues
 [license-shield]: https://img.shields.io/github/license/telepath-php/laravel.svg?style=for-the-badge
 [license-url]: https://github.com/telepath-php/laravel/blob/master/LICENSE.txt
+
+[docs]: https://telepath-php.dev
