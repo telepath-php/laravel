@@ -88,7 +88,7 @@ _For a more detailled look including how to integrate Telepath into your Laravel
 <!-- KNOWN LIMITATIONS -->
 ## Known Limitations
 Please note that this package currently has the following limitations:
-* Handling multple bots in the same Laravel application is not supported yet.
+* Handling multiple bots in the same Laravel application is not supported yet.
 * Support for Lumen or other Laravel subset frameworks is not officially supported.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
