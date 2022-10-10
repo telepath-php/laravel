@@ -3,8 +3,11 @@
 namespace Telepath\Laravel;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Telepath\Laravel\Console\Commands\SetWebhook;
 use Telepath\Laravel\Http\Middleware\TrustTelegramNetwork;
 use Telepath\TelegramBot;
 
@@ -21,6 +24,11 @@ class TelepathServiceProvider extends ServiceProvider
                 config('telepath.bot.api_url', 'https://api.telegram.org')
             );
 
+            if ($proxy = config('telepath.proxy')) {
+                $bot->enableProxy($proxy);
+            }
+
+            File::ensureDirectoryExists(app_path('Telegram'));
             $bot->discoverPsr4(app_path('Telegram'));
 
             $bot->enableCaching(new FilesystemAdapter(
@@ -63,7 +71,7 @@ class TelepathServiceProvider extends ServiceProvider
 
         // Registering package commands
         $this->commands([
-            //
+            SetWebhook::class,
         ]);
     }
 
