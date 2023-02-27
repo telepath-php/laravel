@@ -4,6 +4,7 @@ namespace Telepath\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 use Telepath\Laravel\Config\BotConfig;
+use Telepath\Laravel\Contracts\WebhookResolver;
 use Telepath\TelegramBot;
 
 class TelepathServiceProvider extends ServiceProvider
@@ -28,6 +29,9 @@ class TelepathServiceProvider extends ServiceProvider
             });
 
         }
+
+        // Register Webhook Resolver
+        $this->app->bind(WebhookResolver::class, config('telepath.webhook_resolver'));
     }
 
     public function boot(): void

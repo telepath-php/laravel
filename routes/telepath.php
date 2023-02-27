@@ -1,15 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Telepath\Laravel\Contracts\WebhookResolver;
-use Telepath\Laravel\Facades\Telepath;
+use Telepath\Laravel\Http\Middleware\ResolveWebhook;
+use Telepath\TelegramBot;
 
-Route::post('/telepath/bot/{secret}', function (string $secret, WebhookResolver $secretResolver) {
-
-    $bot = Telepath::bot(
-        $secretResolver->resolve($secret)
-    );
+Route::post('/telepath/bot/{bot}', function (TelegramBot $bot) {
 
     $bot->handleWebhook();
 
-})->name('telepath.webhook');
+})
+    ->name('telepath.webhook')
+    ->middleware([ResolveWebhook::class]);
