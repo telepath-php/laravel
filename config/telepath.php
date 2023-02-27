@@ -27,7 +27,7 @@ return [
     'bots'    => [
 
         'main' => [
-            'api_token' => env('TELEGRAM_API_TOKEN'),
+            'api_token' => env('TELEGRAM_API_TOKEN', ''),
         ],
 
     ],

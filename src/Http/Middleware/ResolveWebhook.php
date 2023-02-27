@@ -4,9 +4,11 @@ namespace Telepath\Laravel\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 use Telepath\Laravel\Contracts\WebhookResolver;
 use Telepath\Laravel\Facades\Telepath;
+use Telepath\TelegramBot;
 
 class ResolveWebhook
 {
@@ -18,12 +20,12 @@ class ResolveWebhook
     public function handle(Request $request, Closure $next): Response
     {
         $name = $this->resolver->resolve(
-            $request->route('bot')
+            $request->route('secret')
         );
 
         abort_if($name === null, 404);
 
-        $request->route()->setParameter('bot', Telepath::bot($name));
+        App::scoped(TelegramBot::class, fn() => Telepath::bot($name));
 
         return $next($request);
     }

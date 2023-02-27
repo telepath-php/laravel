@@ -25,7 +25,11 @@ class TelepathServiceProvider extends ServiceProvider
         foreach (BotConfig::load() as $name => $config) {
 
             $this->app->singleton("telepath.bot.{$name}", function () use ($config) {
-                return new TelegramBot($config->apiToken);
+                $bot = new TelegramBot($config->apiToken);
+
+                $bot->discoverPsr4(app_path('Telepath'));
+
+                return $bot;
             });
 
         }
