@@ -28,6 +28,8 @@ return [
 
         'main' => [
             'api_token' => env('TELEGRAM_API_TOKEN', ''),
+
+            'directory' => app_path('Telepath'),
         ],
 
     ],

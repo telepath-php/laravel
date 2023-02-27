@@ -11,6 +11,8 @@ readonly class BotConfig
 
     public string $apiToken;
 
+    public ?string $directory;
+
     public function __construct(string $name, array $config)
     {
         $this->name = $name;
