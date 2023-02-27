@@ -28,9 +28,20 @@ return [
 
         'main' => [
             'api_token' => env('TELEGRAM_API_TOKEN'),
-            'username'  => env('TELEGRAM_USERNAME'),
         ],
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook Resolver
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the class that is responsible for resolving
+    | the webhook url secret. The default implementation uses Laravels
+    | Hash::make function.
+    |
+    */
+    'webhook_resolver' => \Telepath\Laravel\WebhookResolver\HashWebhookResolver::class,
 
 ];

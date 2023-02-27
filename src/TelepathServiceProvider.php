@@ -3,6 +3,7 @@
 namespace Telepath\Laravel;
 
 use Illuminate\Support\ServiceProvider;
+use Telepath\Laravel\Config\BotConfig;
 use Telepath\TelegramBot;
 
 class TelepathServiceProvider extends ServiceProvider
@@ -10,6 +11,9 @@ class TelepathServiceProvider extends ServiceProvider
 
     public function register(): void
     {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/telepath.php', 'telepath'
+        );
 
         // Register the Telepath class
         $this->app->singleton('telepath', function () {
@@ -17,15 +21,13 @@ class TelepathServiceProvider extends ServiceProvider
         });
 
         // Configure and register the bot instances (lazy)
-        foreach (config('telepath.bots') as $name => $config) {
-            $this->app->singleton("telepath.bot.{$name}", function () use ($config) {
-                return new TelegramBot($config['api_token']);
-            });
-        }
+        foreach (BotConfig::load() as $name => $config) {
 
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/telepath.php', 'telepath'
-        );
+            $this->app->singleton("telepath.bot.{$name}", function () use ($config) {
+                return new TelegramBot($config->apiToken);
+            });
+
+        }
     }
 
     public function boot(): void

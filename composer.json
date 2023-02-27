@@ -3,7 +3,7 @@
     "description": "Laravel integration of Telepath",
     "type": "library",
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "illuminate/support": "^9.0 | ^10.0",
         "telepath/telepath": "v0.9.0-beta",
         "symfony/cache": "^6.2"
