@@ -1,14 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Telepath\TelegramBot;
+use Telepath\Laravel\Facades\Telepath;
 
-Route::post('/api/telegram/webhook/{$token}', static function (TelegramBot $bot, $token) {
+Route::post('/telepath/bot/{secret}', function(string $secret) {
 
-    if ($token !== config('telepath.bot.api_token')) {
-        abort(400);
-    }
+    $bot = Telepath::fromSecret($secret);
 
     $bot->handleWebhook();
 
-})->middleware('telegram.network')->name('telegram.webhook');
+})->name('telepath.webhook');
