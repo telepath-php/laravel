@@ -20,9 +20,9 @@ class SetWebhookCommand extends Command
     {
         // Arguments
         $name = $this->argument('name') ?? config('telepath.default');
-        $url = $this->url($name, $this->hostname());
+        $url = $this->url($name);
 
-        $this->comment("Setting webhook for '{$name}' to {$url}...");
+        $this->comment("Setting webhook for '{$name}' bot to {$url}...");
 
         // Configuration
         $secretToken = config('telepath.webhook_secret') ?: null;
@@ -56,7 +56,7 @@ class SetWebhookCommand extends Command
         return $hostname;
     }
 
-    protected function url(string $botName, string $hostname): string
+    protected function url(string $botName): string
     {
         $secret = resolve(WebhookResolver::class)->create(
             BotConfig::load($botName)
@@ -66,7 +66,7 @@ class SetWebhookCommand extends Command
             'secret' => $secret,
         ], false);
 
-        return $hostname . $routeUrl;
+        return $this->hostname() . $routeUrl;
     }
 
 }

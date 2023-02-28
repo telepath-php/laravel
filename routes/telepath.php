@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Telepath\Laravel\Http\Middleware\ResolveWebhook;
+use Telepath\Laravel\Http\Middleware\ValidateSecretToken;
 use Telepath\TelegramBot;
 
 Route::post('/telepath/bot/{secret}', function (TelegramBot $bot) {
@@ -10,4 +11,7 @@ Route::post('/telepath/bot/{secret}', function (TelegramBot $bot) {
 
 })
     ->name('telepath.webhook')
-    ->middleware([ResolveWebhook::class]);
+    ->middleware([
+        ResolveWebhook::class,
+        ValidateSecretToken::class,
+    ]);
