@@ -23,7 +23,7 @@ class HashWebhookResolver implements WebhookResolver
     {
         $hash = base64_decode($secret);
 
-        foreach (BotConfig::load() as $config) {
+        foreach (BotConfig::loadAll() as $config) {
             if (Hash::check($config->apiToken, $hash)) {
                 return $config->name;
             }

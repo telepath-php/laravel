@@ -25,10 +25,18 @@ readonly class BotConfig
         }
     }
 
+    public static function load(string $name): static
+    {
+        return new static(
+            $name,
+            config("telepath.bots.{$name}")
+        );
+    }
+
     /**
      * @return static[]
      */
-    public static function load(): array
+    public static function loadAll(): array
     {
         $bots = [];
 

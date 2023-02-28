@@ -36,6 +36,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Webhook Secret Token
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the secret token that is used to verify
+    | the webhook url. This is used to prevent unauthorized
+    | access to your webhook url.
+    |
+    */
+
+    'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Webhook Resolver
     |--------------------------------------------------------------------------
     |

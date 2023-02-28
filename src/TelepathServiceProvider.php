@@ -5,6 +5,8 @@ namespace Telepath\Laravel;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Telepath\Laravel\Config\BotConfig;
+use Telepath\Laravel\Console\Commands\InstallCommand;
+use Telepath\Laravel\Console\Commands\SetWebhookCommand;
 use Telepath\Laravel\Contracts\WebhookResolver;
 use Telepath\TelegramBot;
 
@@ -21,7 +23,7 @@ class TelepathServiceProvider extends ServiceProvider
         $this->app->singleton('telepath', Telepath::class);
 
         // Configure and register the bot instances (lazy)
-        foreach (BotConfig::load() as $name => $config) {
+        foreach (BotConfig::loadAll() as $name => $config) {
 
             $this->app->singleton("telepath.bot.{$name}", function () use ($config) {
                 $bot = new TelegramBot($config->apiToken);
@@ -53,6 +55,11 @@ class TelepathServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../config/telepath.php' => config_path('telepath.php'),
+        ], 'telepath-config');
+
+        $this->commands([
+            InstallCommand::class,
+            SetWebhookCommand::class,
         ]);
     }
 

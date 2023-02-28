@@ -18,7 +18,7 @@ class Sha1WebhookResolver implements WebhookResolver
 
     public function resolve(string $secret): ?string
     {
-        foreach (BotConfig::load() as $name => $config) {
+        foreach (BotConfig::loadAll() as $name => $config) {
             if (sha1($config->apiToken) === $secret) {
                 return $name;
             }
