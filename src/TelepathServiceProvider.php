@@ -5,6 +5,7 @@ namespace Telepath\Laravel;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Telepath\Laravel\Config\BotConfig;
+use Telepath\Laravel\Console\Commands\FetchCommand;
 use Telepath\Laravel\Console\Commands\InstallCommand;
 use Telepath\Laravel\Console\Commands\SetWebhookCommand;
 use Telepath\Laravel\Contracts\WebhookResolver;
@@ -59,6 +60,7 @@ class TelepathServiceProvider extends ServiceProvider
 
         $this->commands([
             InstallCommand::class,
+            FetchCommand::class,
             SetWebhookCommand::class,
         ]);
     }

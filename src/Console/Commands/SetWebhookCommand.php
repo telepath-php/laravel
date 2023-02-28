@@ -11,15 +11,23 @@ use Telepath\Laravel\Facades\Telepath;
 class SetWebhookCommand extends Command
 {
 
-    protected $signature = 'telepath:set-webhook {name?} {hostname?}
+    protected $signature = 'telepath:set-webhook {hostname?}
+        {--b|bot= : Identifier of the bot to use}
         {--d|drop-pending-updates : Drop all pending updates}';
 
     protected $description = 'Sets the webhook for the given bot.';
 
     public function handle(): void
     {
-        // Arguments
-        $name = $this->argument('name') ?? config('telepath.default');
+        $name = $this->option('bot') ?? config('telepath.default');
+
+        try {
+            $bot = Telepath::bot($name);
+        } catch (\InvalidArgumentException $e) {
+            $this->error($e->getMessage());
+            return;
+        }
+
         $url = $this->url($name);
 
         $this->comment("Setting webhook for '{$name}' bot to {$url}...");
@@ -29,8 +37,6 @@ class SetWebhookCommand extends Command
 
         // Options
         $dropPendingUpdates = $this->option('drop-pending-updates');
-
-        $bot = Telepath::bot($name);
 
         try {
             $bot->setWebhook(

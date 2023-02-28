@@ -9,7 +9,8 @@ use Illuminate\Support\Str;
 class InstallCommand extends Command
 {
 
-    protected $signature = 'telepath:install {--f|force : Overwrite any existing files}';
+    protected $signature = 'telepath:install 
+        {--f|force : Overwrite any existing files}';
 
     protected $description = 'Installs Telepath';
 
