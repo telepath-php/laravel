@@ -52,6 +52,9 @@ class InstallCommand extends Command
         if (! $example->has('TELEGRAM_WEBHOOK_SECRET')) {
             $example->set('TELEGRAM_WEBHOOK_SECRET');
         }
+
+        $env->save();
+        $example->save();
     }
 
 }

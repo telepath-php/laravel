@@ -5,15 +5,17 @@ namespace Telepath\Laravel\Dotenv;
 class DotenvEditor
 {
 
+    protected string $contents;
+
     public function __construct(
         protected string $filename = '.env'
-    ) {}
+    ) {
+        $this->contents = file_get_contents(base_path($this->filename));
+    }
 
     public function get(string $var): ?string
     {
-        $contents = file_get_contents(base_path($this->filename));
-
-        if (preg_match("/^{$var}=(.*)$/m", $contents, $matches)) {
+        if (preg_match("/^{$var}=(.*)$/m", $this->contents, $matches)) {
             return trim($matches[1], ' \t\n\r\0\x0B"');
         }
 
@@ -22,9 +24,7 @@ class DotenvEditor
 
     public function has(string $var): bool
     {
-        $contents = file_get_contents(base_path($this->filename));
-
-        if (! preg_match("/^{$var}=/m", $contents)) {
+        if (! preg_match("/^{$var}=/m", $this->contents)) {
             return false;
         }
 
@@ -33,17 +33,13 @@ class DotenvEditor
 
     public function set(string $var, mixed $value = ''): void
     {
-        $contents = file_get_contents(base_path($this->filename));
-
         $value = $this->prepareValue($value);
 
-        if (preg_match("/^{$var}=(.*)$/m", $contents, $matches)) {
-            $contents = str_replace($matches[0], "{$var}={$value}", $contents);
+        if (preg_match("/^{$var}=(.*)$/m", $this->contents, $matches)) {
+            $this->contents = str_replace($matches[0], "{$var}={$value}", $this->contents);
         } else {
-            $contents .= "\n{$var}={$value}";
+            $this->contents .= "\n{$var}={$value}";
         }
-
-        file_put_contents(base_path($this->filename), $contents);
     }
 
     protected function prepareValue(mixed $value): string
@@ -57,6 +53,11 @@ class DotenvEditor
         }
 
         return (string) $value;
+    }
+
+    public function save()
+    {
+        file_put_contents(base_path($this->filename), $this->contents);
     }
 
 }
