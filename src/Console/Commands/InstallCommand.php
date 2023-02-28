@@ -5,6 +5,7 @@ namespace Telepath\Laravel\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Telepath\Laravel\Dotenv\DotenvEditor;
 
 class InstallCommand extends Command
 {
@@ -22,40 +23,34 @@ class InstallCommand extends Command
             '--force' => $this->option('force'),
         ]);
 
-        // Add TELEGRAM_API_TOKEN to .env and .env.example
-        $this->addEnvVariable('TELEGRAM_API_TOKEN');
-
-        // Add TELEGRAM_WEBHOOK_SECRET to .env and .env.example
-        $this->addEnvVariable('TELEGRAM_WEBHOOK_SECRET', Str::random(32));
+        $this->setupEnvVariables();
 
         // Make sure the Handler directory exists
         File::ensureDirectoryExists(app_path('Telepath'));
 
-        $this->info('Nova installed successfully.');
-        $this->newLine();
-
-        $this->line('Set your Bot API Token in your .env file and you\'re good to go!');
+        $this->info("Telepath installed successfully.\n");
     }
 
-    protected function addEnvVariable(string $name, string $value = '')
+    protected function setupEnvVariables()
     {
-        foreach (['.env', '.env.example'] as $filename) {
+        $env = new DotenvEditor('.env');
+        $example = new DotenvEditor('.env.example');
 
-            // Check if variable already exists
-            $contents = file_get_contents(base_path($filename));
+        // Save TELEGRAM_API_TOKEN
+        if (! $env->get('TELEGRAM_API_TOKEN') || $this->option('force')) {
+            $apiToken = $this->ask('If you already have a Bot API Token, enter it here');
+            $env->set('TELEGRAM_API_TOKEN', $apiToken);
+        }
+        if (! $example->has('TELEGRAM_API_TOKEN')) {
+            $example->set('TELEGRAM_API_TOKEN');
+        }
 
-            if (preg_match("/^{$name}=/m", $contents)) {
-                continue;
-            }
-
-            if ($filename === '.env.example') {
-                $value = '';
-            }
-
-            // Add to file
-            $file = fopen(base_path($filename), 'a');
-            fwrite($file, "\n{$name}={$value}");
-            fclose($file);
+        // Save TELEGRAM_WEBHOOK_SECRET
+        if (! $env->has('TELEGRAM_WEBHOOK_SECRET') || $this->option('force')) {
+            $env->set('TELEGRAM_WEBHOOK_SECRET', Str::random(32));
+        }
+        if (! $example->has('TELEGRAM_WEBHOOK_SECRET')) {
+            $example->set('TELEGRAM_WEBHOOK_SECRET');
         }
     }
 
