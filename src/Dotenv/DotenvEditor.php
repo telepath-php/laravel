@@ -5,12 +5,17 @@ namespace Telepath\Laravel\Dotenv;
 class DotenvEditor
 {
 
-    protected string $contents;
-
     public function __construct(
-        protected string $filename = '.env'
-    ) {
-        $this->contents = file_get_contents(base_path($this->filename));
+        protected string $contents = '',
+        protected string $filename = '.env',
+    ) {}
+
+    public static function loadFile(string $filename): static
+    {
+        return new static(
+            file_get_contents($filename),
+            $filename,
+        );
     }
 
     public function get(string $var): ?string
@@ -55,9 +60,12 @@ class DotenvEditor
         return (string) $value;
     }
 
-    public function save()
+    public function save(string $filename = null): void
     {
-        file_put_contents(base_path($this->filename), $this->contents);
+        file_put_contents(
+            $filename ?? $this->filename,
+            $this->contents
+        );
     }
 
 }

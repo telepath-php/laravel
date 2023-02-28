@@ -33,10 +33,10 @@ class InstallCommand extends Command
 
     protected function setupEnvVariables()
     {
-        $env = new DotenvEditor('.env');
-        $example = new DotenvEditor('.env.example');
+        $env = DotenvEditor::loadFile(base_path('.env'));
+        $example = DotenvEditor::loadFile(base_path('.env.example'));
 
-        // Save TELEGRAM_API_TOKEN
+        // Setup TELEGRAM_API_TOKEN
         if (! $env->get('TELEGRAM_API_TOKEN') || $this->option('force')) {
             $apiToken = $this->ask('If you already have a Bot API Token, enter it here');
             $env->set('TELEGRAM_API_TOKEN', $apiToken);
@@ -45,7 +45,7 @@ class InstallCommand extends Command
             $example->set('TELEGRAM_API_TOKEN');
         }
 
-        // Save TELEGRAM_WEBHOOK_SECRET
+        // Setup TELEGRAM_WEBHOOK_SECRET
         if (! $env->has('TELEGRAM_WEBHOOK_SECRET') || $this->option('force')) {
             $env->set('TELEGRAM_WEBHOOK_SECRET', Str::random(32));
         }
