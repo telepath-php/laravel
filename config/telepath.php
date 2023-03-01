@@ -12,6 +12,7 @@ return [
     | you don't need to worry about it.
     |
     */
+
     'default' => 'main',
 
     /*
@@ -24,6 +25,7 @@ return [
     | that are preconfigured for the default bot.
     |
     */
+
     'bots'    => [
 
         'main' => [
@@ -34,29 +36,49 @@ return [
 
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Webhook Secret Token
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify the secret token that is used to verify
-    | the webhook url. This is used to prevent unauthorized
-    | access to your webhook url.
-    |
-    */
+    'webhook' => [
 
-    'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
+        /*
+        |--------------------------------------------------------------------------
+        | Webhook Secret Token
+        |--------------------------------------------------------------------------
+        |
+        | Here you may specify the secret token that is used to verify
+        | the webhook url. This is used to prevent unauthorized
+        | access to your webhook url.
+        |
+        */
 
-    /*
-    |--------------------------------------------------------------------------
-    | Webhook Resolver
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify the class that is responsible for resolving
-    | the webhook url secret. The default implementation uses Laravels
-    | Hash::make function.
-    |
-    */
-    'webhook_resolver' => \Telepath\Laravel\WebhookResolver\HashWebhookResolver::class,
+        'secret' => env('TELEGRAM_WEBHOOK_SECRET'),
+
+        /*
+        |--------------------------------------------------------------------------
+        | Webhook Middleware
+        |--------------------------------------------------------------------------
+        |
+        |
+        |
+        */
+
+        'middleware' => [
+            Telepath\Laravel\Http\Middleware\ResolveWebhook::class,
+            Telepath\Laravel\Http\Middleware\ValidateRequestSource::class,
+            Telepath\Laravel\Http\Middleware\ValidateSecretToken::class,
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Webhook Resolver
+        |--------------------------------------------------------------------------
+        |
+        | Here you may specify the class that is responsible for resolving
+        | the webhook url secret. The default implementation uses Laravels
+        | Hash::make function.
+        |
+        */
+
+        'resolver'   => \Telepath\Laravel\WebhookResolver\HashWebhookResolver::class,
+
+    ],
 
 ];

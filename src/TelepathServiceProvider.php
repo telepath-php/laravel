@@ -2,6 +2,7 @@
 
 namespace Telepath\Laravel;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Telepath\Laravel\Config\BotConfig;
@@ -45,11 +46,13 @@ class TelepathServiceProvider extends ServiceProvider
         }
 
         // Register Webhook Resolver
-        $this->app->bind(WebhookResolver::class, config('telepath.webhook_resolver'));
+        $this->app->bind(WebhookResolver::class, config('telepath.webhook.resolver'));
     }
 
     public function boot(): void
     {
+        Route::middlewareGroup('telepath', config('telepath.webhook.middleware', []));
+
         $this->loadRoutesFrom(
             __DIR__ . '/../routes/telepath.php'
         );

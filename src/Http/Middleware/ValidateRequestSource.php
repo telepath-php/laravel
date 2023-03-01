@@ -4,17 +4,21 @@ namespace Telepath\Laravel\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\IpUtils;
 use Symfony\Component\HttpFoundation\Response;
 
-class ValidateSecretToken
+class ValidateRequestSource
 {
+
+    protected array $telegramSubnets = [
+        '149.154.160.0/20',
+        '91.108.4.0/22',
+    ];
 
     public function handle(Request $request, Closure $next): Response
     {
-        $secretToken = config('telepath.webhook.secret') ?: null;
-
-        abort_if(
-            $secretToken !== null && $request->header('X-Telegram-Bot-Api-Secret-Token') !== $secretToken,
+        abort_unless(
+            IpUtils::checkIp($request->ip(), $this->telegramSubnets),
             403,
             'Forbidden'
         );

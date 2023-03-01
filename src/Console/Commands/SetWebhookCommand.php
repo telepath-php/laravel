@@ -33,7 +33,7 @@ class SetWebhookCommand extends Command
         $this->comment("Setting webhook for '{$name}' bot to {$url}...");
 
         // Configuration
-        $secretToken = config('telepath.webhook_secret') ?: null;
+        $secretToken = config('telepath.webhook.secret') ?: null;
 
         // Options
         $dropPendingUpdates = $this->option('drop-pending-updates');
