@@ -13,8 +13,9 @@ class ValidateSecretToken
     {
         $secretToken = config('telepath.webhook.secret') ?: null;
 
-        abort_if(
-            $secretToken !== null && $request->header('X-Telegram-Bot-Api-Secret-Token') !== $secretToken,
+        abort_unless(
+            $secretToken === null
+                || $request->header('X-Telegram-Bot-Api-Secret-Token') === $secretToken,
             403,
             'Forbidden'
         );
