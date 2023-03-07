@@ -38,15 +38,9 @@ readonly class BotConfig
      */
     public static function loadAll(): array
     {
-        $bots = [];
-
-        foreach (config('telepath.bots', []) as $name => $config) {
-
-            $bots[$name] = new static($name, $config);
-
-        }
-
-        return $bots;
+        return collect(config('telepath.bots', []))
+            ->mapWithKeys(fn(array $config, string $name) => [$name => new static($name, $config)])
+            ->all();
     }
 
 }
