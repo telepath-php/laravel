@@ -28,11 +28,14 @@ class TelepathServiceProvider extends ServiceProvider
         foreach (BotConfig::loadAll() as $name => $config) {
 
             $this->app->singleton("telepath.bot.{$name}", function () use ($config) {
-                $bot = new TelegramBot($config->apiToken);
+                $bot = new TelegramBot(
+                    $config->apiToken,
+                    container: app(),
+                );
 
                 $bot->enableCaching(
                     new FilesystemAdapter(
-                        directory: storage_path("app/telepath/cache/{$config->name}"),
+                        directory: storage_path("telepath/cache/{$config->name}"),
                     )
                 );
 
