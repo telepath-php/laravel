@@ -12,16 +12,10 @@ class Telepath
     {
         $name ??= config('telepath.default');
 
-        return static::make($name)
-            ?? throw new \InvalidArgumentException('Invalid bot name provided.');
-    }
-
-    protected function make(string $identifier): ?TelegramBot
-    {
         try {
-            return app("telepath.bot.{$identifier}");
+            return app("telepath.bot.{$name}");
         } catch (BindingResolutionException) {
-            return null;
+            throw new \InvalidArgumentException('Invalid bot name provided.');
         }
     }
 

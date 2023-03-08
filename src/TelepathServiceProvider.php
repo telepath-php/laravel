@@ -4,6 +4,7 @@ namespace Telepath\Laravel;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Telepath\Laravel\Config\BotConfig;
 use Telepath\Laravel\Console\Commands\FetchCommand;
@@ -31,12 +32,6 @@ class TelepathServiceProvider extends ServiceProvider
                 $bot = new TelegramBot(
                     $config->apiToken,
                     container: app(),
-                );
-
-                $bot->enableCaching(
-                    new FilesystemAdapter(
-                        directory: storage_path("telepath/cache/{$config->name}"),
-                    )
                 );
 
                 $bot->discoverPsr4(
