@@ -4,14 +4,13 @@ namespace Telepath\Laravel;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Telepath\Bot;
+use Telepath\Facades\BotBuilder;
 use Telepath\Laravel\Config\BotConfig;
 use Telepath\Laravel\Console\Commands\FetchCommand;
 use Telepath\Laravel\Console\Commands\InstallCommand;
 use Telepath\Laravel\Console\Commands\SetWebhookCommand;
 use Telepath\Laravel\Contracts\WebhookResolver;
-use Telepath\TelegramBot;
 
 class TelepathServiceProvider extends ServiceProvider
 {
@@ -29,17 +28,18 @@ class TelepathServiceProvider extends ServiceProvider
         foreach (BotConfig::loadAll() as $name => $config) {
 
             $this->app->singleton("telepath.bot.{$name}", function () use ($config) {
-                $bot = new TelegramBot(
-                    $config->apiToken,
-                    container: app(),
-                );
 
-                $bot->discoverPsr4(
-                    $config->directory ?? app_path('Telepath')
-                );
+                return BotBuilder::token($config->apiToken)
+                    ->handlersIn($config->directory ?? app_path('Telepath'))
+                    ->useServiceContainer(app())
+                    ->build();
 
-                return $bot;
             });
+
+            // Allow auto-wiring of the default bot inside Laravel
+            if ($name === config('telepath.default')) {
+                $this->app->singleton(Bot::class, fn() => resolve("telepath.bot.{$name}"));
+            }
 
         }
 

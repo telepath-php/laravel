@@ -6,9 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
+use Telepath\Bot;
 use Telepath\Laravel\Contracts\WebhookResolver;
 use Telepath\Laravel\Facades\Telepath;
-use Telepath\TelegramBot;
 
 class ResolveWebhook
 {
@@ -25,7 +25,7 @@ class ResolveWebhook
 
         abort_if($name === null, 404);
 
-        App::scoped(TelegramBot::class, fn() => Telepath::bot($name));
+        App::scoped(Bot::class, fn() => Telepath::bot($name));
 
         return $next($request);
     }

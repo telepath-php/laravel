@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Telepath\TelegramBot;
+use Telepath\Bot;
 
 Route::name('telepath.webhook')
     ->middleware('telepath')
-    ->post('/telepath/bot/{secret}', function (TelegramBot $bot) {
+    ->post('/telepath/bot/{secret}', function (Bot $bot) {
 
         $bot->handleWebhook();
 

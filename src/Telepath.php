@@ -3,12 +3,12 @@
 namespace Telepath\Laravel;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Telepath\TelegramBot;
+use Telepath\Bot;
 
 class Telepath
 {
 
-    public function bot(string $name = null): ?TelegramBot
+    public function bot(string $name = null): Bot
     {
         $name ??= config('telepath.default');
 

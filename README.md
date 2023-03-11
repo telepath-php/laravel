@@ -40,17 +40,20 @@
 
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 Telepath is a modern framework-agnostic libraray to create Telegram Bots in PHP.
 
-This package integrates a Telepath based bot into your Laravel application being able to receive and respond to Telegram messages your bot receives.
+This package integrates a Telepath based bot into your Laravel application being able to receive and respond to Telegram
+messages your bot receives.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 This package can be installed via composer:
@@ -63,31 +66,36 @@ The package will automatically install the required dependencies to use Telepath
 
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
-You can get the Bot instance via the service container
+You can get the Bot instance via the Telepath facade.
 
 ```php
-$bot = resolve(\Telepath\TelegramBot::class);
+$bot = \Telepath::bot();
 ```
 
 or by using autowiring to request an instance.
 
 ```php
 public function __construct(
-    protected TelegramBot $bot
+    protected Telepath\Bot $bot
 ) {}
 ```
 
-_For a more detailled look including how to integrate Telepath into your Laravel application please also have a look into our [Documentation][docs]_
+_For a more detailled look including how to integrate Telepath into your Laravel application please also have a look
+into our [Documentation][docs]_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- KNOWN LIMITATIONS -->
+
 ## Known Limitations
+
 Please note that this package currently has the following limitations:
+
 * Handling multiple bots in the same Laravel application is not supported yet.
 * Support for Lumen or other Laravel subset frameworks is not officially supported.
 
@@ -95,11 +103,14 @@ Please note that this package currently has the following limitations:
 
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any
+contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also
+simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
@@ -113,6 +124,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.md` for more information.
@@ -122,6 +134,7 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 
 
 <!-- CONTACT -->
+
 ## Contact
 
 Tii - [@TiiFuchs](https://twitter.com/TiiFuchs) - mail@tii.one
@@ -135,13 +148,21 @@ Project Link: [https://github.com/telepath-php/laravel](https://github.com/telep
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/telepath-php/laravel.svg?style=for-the-badge
+
 [contributors-url]: https://github.com/telepath-php/laravel/graphs/contributors
+
 [stars-shield]: https://img.shields.io/github/stars/telepath-php/laravel.svg?style=for-the-badge
+
 [stars-url]: https://github.com/telepath-php/laravel/stargazers
+
 [issues-shield]: https://img.shields.io/github/issues/telepath-php/laravel.svg?style=for-the-badge
+
 [issues-url]: https://github.com/telepath-php/laravel/issues
+
 [license-shield]: https://img.shields.io/github/license/telepath-php/laravel.svg?style=for-the-badge
+
 [license-url]: https://github.com/telepath-php/laravel/blob/master/LICENSE.txt
 
 [docs]: https://telepath-php.dev

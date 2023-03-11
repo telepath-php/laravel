@@ -3,7 +3,6 @@
 namespace Telepath\Laravel\Contracts;
 
 use Telepath\Laravel\Config\BotConfig;
-use Telepath\TelegramBot;
 
 interface WebhookResolver
 {
