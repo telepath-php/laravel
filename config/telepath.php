@@ -53,6 +53,19 @@ return [
 
         /*
         |--------------------------------------------------------------------------
+        | Allow Local Subnets
+        |--------------------------------------------------------------------------
+        |
+        | Here you may specify if you want to allow local subnets to access
+        | your webhook url in non-local environment. This is useful for
+        | testing purposes or if a custom bot API server is used.
+        |
+        */
+
+        'allow_local_subnets' => env('TELEPATH_ALLOW_LOCAL_SUBNETS', false),
+
+        /*
+        |--------------------------------------------------------------------------
         | Webhook Middleware
         |--------------------------------------------------------------------------
         |

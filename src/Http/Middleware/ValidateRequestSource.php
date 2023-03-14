@@ -15,15 +15,39 @@ class ValidateRequestSource
         '91.108.4.0/22',
     ];
 
+    protected array $localSubnets = [
+        '127.0.0.1/32',
+        '192.168.0.0/16',
+        '172.16.0.0/12',
+        '10.0.0.0/8',
+    ];
+
     public function handle(Request $request, Closure $next): Response
     {
         abort_unless(
-            IpUtils::checkIp($request->ip(), $this->telegramSubnets),
+            $this->isTelegramSubnet($request->ip())
+            || $this->allowLocalSubnets() && $this->isLocalSubnet($request->ip()),
             403,
             'Forbidden'
         );
 
         return $next($request);
+    }
+
+    protected function allowLocalSubnets(): bool
+    {
+        return app()->environment('local')
+            || config('telepath.webhook.allow_local_subnets', false);
+    }
+
+    protected function isTelegramSubnet(string $ip): bool
+    {
+        return IpUtils::checkIp($ip, $this->telegramSubnets);
+    }
+
+    protected function isLocalSubnet(string $ip): bool
+    {
+        return IpUtils::checkIp($ip, $this->localSubnets);
     }
 
 }
