@@ -11,6 +11,7 @@ use Telepath\Laravel\Console\Commands\FetchCommand;
 use Telepath\Laravel\Console\Commands\InstallCommand;
 use Telepath\Laravel\Console\Commands\SetWebhookCommand;
 use Telepath\Laravel\Contracts\WebhookResolver;
+use Telepath\Laravel\Events\EventDispatcherBridge;
 
 class TelepathServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,7 @@ class TelepathServiceProvider extends ServiceProvider
 
                 return BotBuilder::token($config->apiToken)
                     ->handlersIn($config->directory ?? app_path('Telepath'))
+                    ->useEventDispatcher(new EventDispatcherBridge(app('events')))
                     ->useServiceContainer(app())
                     ->build();
 
