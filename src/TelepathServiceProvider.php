@@ -31,7 +31,7 @@ class TelepathServiceProvider extends ServiceProvider
             $this->app->singleton("telepath.bot.{$name}", function () use ($config) {
 
                 return BotBuilder::token($config->apiToken)
-                    ->handlersIn($config->directory ?? app_path('Telepath'))
+                    ->handlerPath($config->directory ?? app_path('Telepath'))
                     ->useEventDispatcher(new EventDispatcherBridge(app('events')))
                     ->useServiceContainer(app())
                     ->build();
