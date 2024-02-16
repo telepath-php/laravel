@@ -5,7 +5,7 @@
     "require": {
         "php": "^8.2",
         "illuminate/support": "^9.0 | ^10.0",
-        "telepath/telepath": "^0.16",
+        "telepath/telepath": "^0.17",
         "symfony/cache": "^6.2"
     },
     "license": "MIT",
