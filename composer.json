@@ -22,7 +22,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "0.4.x-dev"
+            "dev-main": "0.6.x-dev"
         },
         "laravel": {
             "providers": [
@@ -34,7 +34,7 @@
         }
     },
     "require-dev": {
-        "laravel/framework": "^9.0 | ^10.0"
+        "laravel/framework": "^9.0 | ^10.0 | ^11.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
