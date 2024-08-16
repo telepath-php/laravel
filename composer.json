@@ -5,7 +5,7 @@
     "require": {
         "php": "^8.2",
         "illuminate/support": "^9.0 | ^10.0 | ^11.0",
-        "telepath/telepath": "^0.24",
+        "telepath/telepath": "^0.25",
         "symfony/cache": "^6.2"
     },
     "license": "MIT",
@@ -22,7 +22,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "0.12.x-dev"
+            "dev-main": "0.13.x-dev"
         },
         "laravel": {
             "providers": [
