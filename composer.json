@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "php": "^8.2",
-        "illuminate/support": "^9.0 | ^10.0 | ^11.0",
+        "illuminate/support": "^9.0 | ^10.0 | ^11.0 | ^12.0",
         "telepath/telepath": "^0.31",
         "symfony/cache": "^6.2"
     },
@@ -34,7 +34,7 @@
         }
     },
     "require-dev": {
-        "laravel/framework": "^9.0 | ^10.0 | ^11.0"
+        "laravel/framework": "^9.0 | ^10.0 | ^11.0 | ^12.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
